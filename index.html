@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RCA I — Lecture 4</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-page:#F8FAFC;--bg-card:#FFFFFF;--bg-section:#F1F5F9;
+  --accent:#6366F1;--accent-dark:#4338CA;--accent-wash:#EEF2FF;
+  --blue:#0EA5E9;--green:#10B981;--amber:#F59E0B;--red:#EF4444;--purple:#8B5CF6;
+  --text-h:#0F172A;--text-b:#1E293B;--text-s:#64748B;--text-m:#94A3B8;
+  --border:#E2E8F0;--border-strong:#CBD5E1;
+  --r:8px;--rm:12px;--rl:16px;--maxw:1440px;--pad:clamp(24px,4vw,72px);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg-page:#0D1117;--bg-card:#161B27;--bg-section:#1A2235;
+  --text-h:#F1F5F9;--text-b:#CBD5E1;--text-s:#94A3B8;--text-m:#475569;--border:#1E293B;--border-strong:#334155;}}
+:root[data-theme="dark"]{
+  --bg-page:#0D1117;--bg-card:#161B27;--bg-section:#1A2235;
+  --text-h:#F1F5F9;--text-b:#CBD5E1;--text-s:#94A3B8;--text-m:#475569;--border:#1E293B;--border-strong:#334155;}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 52px)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg-page);color:var(--text-b);line-height:1.65;font-size:16px}
+h1{font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15}
+h2{font-size:clamp(1.4rem,2.2vw,1.75rem);font-weight:600;color:var(--text-h);line-height:1.3;margin-bottom:8px}
+h3{font-size:1.05rem;font-weight:600;color:var(--text-h);margin-bottom:6px}
+p{color:var(--text-b);line-height:1.7}a{color:var(--accent);text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.sec{padding:64px 0}.sec-alt{background:var(--bg-section)}.measure{max-width:720px}
+.hero{background:var(--accent);padding:72px var(--pad) 84px;text-align:center}
+.hero-inner{max-width:var(--maxw);margin:0 auto}
+.hero-chip{display:inline-block;background:rgba(255,255,255,.18);color:#C7D2FE;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
+.hero-sub{font-size:clamp(1rem,1.4vw,1.2rem);color:#C7D2FE;max-width:660px;margin:18px auto 32px}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-badge{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);padding:8px 18px;border-radius:20px;font-size:14px;font-weight:500}
+.snav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg-card);border-bottom:1px solid var(--border);z-index:100;overflow-x:auto;white-space:nowrap;padding:0 var(--pad)}
+.snav-inner{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:center;flex-wrap:nowrap}
+.snav a{padding:15px 15px;font-size:13.5px;font-weight:500;color:var(--text-s);display:inline-block;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.snav a:hover{color:var(--accent)}.snav a.on{color:var(--accent);border-bottom-color:var(--accent)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:24px}
+.callout{background:var(--accent-wash);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;margin:16px 0}
+.callout p,.callout div{font-size:14.5px;color:var(--accent-dark)}
+.witty{background:var(--bg-section);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:16px 20px;font-size:14.5px;color:var(--text-s);font-style:italic;margin:20px 0}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mod2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.g2,.g3,.g4,.mod2{grid-template-columns:1fr}.sec{padding:44px 0}.hero{padding:48px 20px 56px}}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.t-blue{background:#E0F2FE;color:#0369A1}.t-green{background:#D1FAE5;color:#065F46}
+.t-amber{background:#FEF3C7;color:#92400E}.t-red{background:#FEE2E2;color:#991B1B}
+.t-purple{background:#EDE9FE;color:#5B21B6}.t-indigo{background:var(--accent-wash);color:var(--accent-dark)}
+.toollink{display:inline-flex;align-items:center;gap:8px;background:var(--accent-wash);color:var(--accent-dark);border:1px solid var(--border);border-radius:20px;padding:9px 16px;font-size:13.5px;font-weight:600;margin-top:6px}
+.toollink:hover{background:#E0E7FF}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--bg-section);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:13px;color:var(--text-b)}
+/* ACCORDION */
+.fs{border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--bg-card)}
+.fsh{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg-card);transition:background .15s}
+.fsh:hover{background:var(--bg-section)}
+.fl{width:34px;height:34px;border-radius:var(--r);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fb{display:none;padding:16px 18px;background:var(--bg-section);border-top:1px solid var(--border)}.fb.on{display:block}
+.ml{list-style:none;display:flex;flex-direction:column;gap:6px}
+.ml li{font-size:14px;color:var(--text-b);display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
+.ml li:last-child{border-bottom:none}.ml li::before{content:"→";color:var(--accent);font-weight:600;flex-shrink:0}
+/* REVEAL */
+.rev-btn{width:100%;text-align:left;background:var(--bg-section);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;cursor:pointer;color:var(--accent);font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px;font-family:inherit}
+.rev-btn:hover{background:var(--accent-wash)}
+.rev-body{display:none;margin-top:12px}.rev-body.on{display:block}
+/* VERDICT PILL */
+.vpill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.vpill.out{background:#D1FAE5;color:#065F46}.vpill.lead{background:#FEE2E2;color:#991B1B}
+/* ANALOGY */
+.analogy{display:grid;grid-template-columns:0.85fr 1.15fr;gap:0;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;background:var(--bg-card)}
+@media(max-width:820px){.analogy{grid-template-columns:1fr}}
+.an-visual{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:14px;color:#fff}
+.an-visual.detect{background:linear-gradient(135deg,#4338CA,#0F172A)}
+.an-visual.cctv{background:linear-gradient(135deg,#0EA5E9,#0369A1)}
+.an-emoji{font-size:52px;line-height:1}
+.an-tag{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.an-title{font-size:1.35rem;font-weight:700;color:#fff;line-height:1.25}
+.an-premise{font-size:14.5px;color:rgba(255,255,255,.92);line-height:1.6}
+.an-map{padding:24px 28px;display:flex;flex-direction:column;gap:2px}
+.an-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--border)}
+.an-row:last-child{border-bottom:none}
+.an-ico{width:40px;height:40px;border-radius:10px;background:var(--bg-section);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.an-side{font-size:14px;color:var(--text-s);flex:1}.an-arrow{color:var(--text-m);font-weight:700;flex-shrink:0}
+.an-frame{font-size:14px;color:var(--text-h);font-weight:600;flex:1}
+/* QUIZ */
+.quiz{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:24px}
+.quiz .qtag{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.quiz .qq{font-size:15px;font-weight:600;color:var(--text-h);margin-bottom:16px}
+.qopts{display:flex;flex-direction:column;gap:10px}
+.qopt{text-align:left;background:var(--bg-section);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 16px;cursor:pointer;font-size:14px;color:var(--text-b);font-family:inherit;transition:all .15s;display:flex;gap:10px;align-items:flex-start}
+.qopt:hover{border-color:var(--accent)}.qopt .qk{font-weight:700;color:var(--text-s);flex-shrink:0}
+.qopt.correct{background:#D1FAE5;border-color:var(--green);color:#065F46}.qopt.correct .qk{color:var(--green)}
+.qopt.wrong{background:#FEE2E2;border-color:var(--red);color:#991B1B}.qopt.wrong .qk{color:var(--red)}
+.qexp{display:none;margin-top:14px;background:var(--accent-wash);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-size:14px;color:var(--accent-dark)}
+.qexp.on{display:block}.qexp b{color:var(--text-h)}
+/* FUNNEL BARS */
+.fnl{display:flex;flex-direction:column;gap:9px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:22px}
+.fnl-row{display:flex;align-items:center;gap:14px}
+.fnl-name{width:170px;font-size:13.5px;color:var(--text-b);flex-shrink:0;text-align:right;font-weight:500}
+.fnl-track{flex:1;background:var(--bg-section);border-radius:6px;height:36px;overflow:hidden}
+.fnl-bar{height:100%;border-radius:6px;background:linear-gradient(90deg,#6366F1,#0EA5E9);display:flex;align-items:center;padding-left:12px;color:#fff;font-size:13px;font-weight:700;min-width:38px;white-space:nowrap}
+@media(max-width:640px){.fnl-name{width:104px;font-size:11.5px}}
+/* STAGE (backtracking) */
+.stg{display:flex;align-items:center;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.stg.out{border-left:4px solid var(--green)}.stg.suspect{border-left:4px solid var(--amber)}
+.stg-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.stg-name{font-size:14.5px;font-weight:600;color:var(--text-h);flex:1}
+/* GATEWAY */
+.gw{display:flex;align-items:center;gap:10px;border-radius:var(--r);padding:14px 16px;font-size:14px;font-weight:600}
+.gw.ok{background:#D1FAE5;color:#065F46}.gw.down{background:#FEE2E2;color:#991B1B}
+/* FIG */
+.fig{max-width:900px;margin:22px 0;border:1px solid var(--border);border-radius:var(--rm);overflow:hidden;background:var(--bg-card)}
+.fig img{display:block;width:100%;height:auto;background:var(--bg-section)}
+.fig figcaption{font-size:12.5px;color:var(--text-s);padding:10px 16px;border-top:1px solid var(--border);background:var(--bg-section)}
+/* POCKET / TAKEAWAY */
+.pocket{background:#0F172A;border-radius:var(--rl);padding:36px}
+.pocket h3{color:#C7D2FE;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.prow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.pi{background:rgba(255,255,255,.1);border-radius:6px;padding:7px 13px;font-size:13.5px;color:#E2E8F0}
+.pi span{color:#818CF8;font-weight:700}
+.tw{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border)}
+.tw:last-child{border-bottom:none}
+.twn{width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.iq-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:24px}
+.mini{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:20px}
+.mini .mk{height:32px;padding:0 12px;border-radius:8px;display:inline-flex;align-items:center;font-weight:700;color:#fff;font-size:13px;margin-bottom:10px}
+.qa{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:20px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-chip">Lecture 4 · Product Analytics</div>
+    <h1>RCA I — Root Cause Analysis</h1>
+    <p class="hero-sub">One scary 2% drop in orders, traced down a funnel and through a wall of questions to a single provable cause.</p>
+    <div class="badges">
+      <span class="hero-badge">CRIED spine</span>
+      <span class="hero-badge">User-Journey Funnel</span>
+      <span class="hero-badge">Backtracking</span>
+      <span class="hero-badge">Diagnose the Cause</span>
+    </div>
+  </div>
+</header>
+
+<nav class="snav">
+  <div class="snav-inner">
+    <a href="#recap">Recap</a>
+    <a href="#scene">The Scene</a>
+    <a href="#rca">What is RCA</a>
+    <a href="#lifecycle">Life Cycle</a>
+    <a href="#myntra">Myntra Case</a>
+    <a href="#funnel">Funnel</a>
+    <a href="#clarify">Clarify</a>
+    <a href="#diagnose">Diagnose</a>
+    <a href="#interview">Interview</a>
+    <a href="#pocket">Pocket Card</a>
+  </div>
+</nav>
+
+<!-- RECAP -->
+<section class="sec" id="recap">
+  <div class="wrap">
+    <div class="lbl">Where we left off</div>
+    <h2>Recap of Lecture 3</h2>
+    <p class="measure" style="margin-bottom:24px">Two threads carry straight into today: you walked the <strong>customer-journey funnel</strong>, and you met the two interview question types. A <strong>metric-change</strong> question <em>is</em> a root cause analysis — and you already own the core method.</p>
+    <div class="g3">
+      <div class="mini"><div class="mk" style="background:var(--blue)">The funnel</div><p style="font-size:13.5px;color:var(--text-s)">Acquisition → engagement → conversion. Today we walk a funnel again — but to find where it <em>broke</em>.</p></div>
+      <div class="mini"><div class="mk" style="background:var(--amber)">Two question types</div><p style="font-size:13.5px;color:var(--text-s)">Definition (done) and change. A metric-change question <em>is</em> RCA — today's topic.</p></div>
+      <div class="mini"><div class="mk" style="background:var(--purple)">CRIED</div><p style="font-size:13.5px;color:var(--text-s)">Clarify · Rule Out · Internal · External. The RCA life cycle is that same spine at full depth.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE -->
+<section class="sec sec-alt" id="scene">
+  <div class="wrap">
+    <div class="lbl">Setting the scene</div>
+    <h2>The Alert Nobody Wants</h2>
+    <div class="g2" style="gap:24px;align-items:stretch;margin-top:8px">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--rm);padding:28px;border-top:4px solid var(--red)">
+        <div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">🚨 Mid-morning alert</div>
+        <p style="font-size:16px;color:var(--text-h);font-weight:600;line-height:1.5;margin-bottom:14px">On a Myntra-style fashion marketplace, confirmed orders have fallen from <strong>5% to 3% of sessions</strong> over the last three days.</p>
+        <p style="font-size:14px;color:var(--text-s)">A 2-point drop that, at Myntra's scale, is crores of rupees. No error message. No obvious culprit. Traffic looks normal. Leadership wants an answer, not a shrug.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:16px">
+        <p style="font-size:15px;color:var(--text-b)">Aditi's instinct isn't to guess — it's to run a <strong>method</strong>:</p>
+        <div style="display:flex;gap:12px;align-items:center"><div style="width:36px;height:36px;background:var(--accent-wash);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="font-size:14.5px">Clarify the problem</div></div>
+        <div style="display:flex;gap:12px;align-items:center"><div style="width:36px;height:36px;background:var(--accent-wash);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="font-size:14.5px">Rule out the boring explanations</div></div>
+        <div style="display:flex;gap:12px;align-items:center"><div style="width:36px;height:36px;background:var(--accent-wash);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="font-size:14.5px">Work through internal &amp; external causes until the evidence points somewhere</div></div>
+        <p style="font-size:14px;color:var(--text-s)">That method is <strong>Root Cause Analysis</strong>. By the end you'll follow the exact trail — from the drop, down a funnel, through a wall of questions, to a single root cause hiding in the payment step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS RCA -->
+<section class="sec" id="rca">
+  <div class="wrap">
+    <div class="lbl">The method</div>
+    <h2>What Is Root Cause Analysis?</h2>
+    <div class="g2" style="align-items:start;margin-bottom:24px">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <h3>Root cause</h3>
+          <p style="font-size:14.5px">The core issue — the underlying cause — of a problem.</p>
+        </div>
+        <div class="card">
+          <h3>Root cause analysis</h3>
+          <p style="font-size:14.5px">A systematic process for identifying the underlying causes of a problem: break it into smaller parts, examine each in detail, and find the causes contributing to it.</p>
+        </div>
+      </div>
+      <div style="background:var(--bg-section);border-radius:var(--rm);padding:22px">
+        <div style="font-size:12px;font-weight:600;color:var(--text-s);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">You already do this every day</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:center"><div style="font-size:24px">🤒</div><div style="font-size:14px">Sick at work? A <strong>doctor</strong> finds the root cause.</div></div>
+          <div style="display:flex;gap:12px;align-items:center"><div style="font-size:24px">🚗</div><div style="font-size:14px">Car won't start? A <strong>mechanic</strong> finds the root cause.</div></div>
+          <div style="display:flex;gap:12px;align-items:center"><div style="font-size:24px">📉</div><div style="font-size:14px">Business underperforming? You find out <strong>why</strong>.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/514/original/ChatGPT_Image_Sep_15__2026__03_46_45_PM.png?1789467445" alt="Everyday root cause analysis" loading="lazy">
+      <figcaption>Root cause analysis is a habit you already have — you just apply it to a metric now.</figcaption>
+    </figure>
+
+    <!-- DETECTIVE ANALOGY -->
+    <div style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 12px">🧩 Analogy</div>
+    <div class="analogy" style="margin-bottom:28px">
+      <div class="an-visual detect">
+        <div class="an-emoji">🕵️</div>
+        <div class="an-tag">RCA = detective work</div>
+        <div class="an-title">A detective doesn't accuse the first person they see</div>
+        <div class="an-premise">They establish the facts, rule out false alarms, then interrogate every suspect — eliminating each until one can't be cleared. RCA runs the same playbook on a broken metric. (The everyday version: a doctor diagnosing symptoms, a mechanic tracing a fault.)</div>
+      </div>
+      <div class="an-map">
+        <div class="an-row"><div class="an-ico">🚨</div><div class="an-side">The crime is reported</div><div class="an-arrow">→</div><div class="an-frame">A metric drops — define the problem</div></div>
+        <div class="an-row"><div class="an-ico">🔍</div><div class="an-side">Is it even a real crime?</div><div class="an-arrow">→</div><div class="an-frame">Rule Out — bugs, glitches, bad data</div></div>
+        <div class="an-row"><div class="an-ico">🗂️</div><div class="an-side">Interrogate every suspect</div><div class="an-arrow">→</div><div class="an-frame">Clarifying questions — internal &amp; external</div></div>
+        <div class="an-row"><div class="an-ico">🎯</div><div class="an-side">The one who can't be cleared</div><div class="an-arrow">→</div><div class="an-frame">The root cause</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.1rem;margin-bottom:12px">Three goals · three questions</h3>
+    <div class="g3" style="margin-bottom:20px">
+      <div class="card"><div class="tag t-indigo" style="margin-bottom:8px">What's the problem?</div><p style="font-size:14px">Define the issue by its impact on overall goals.</p></div>
+      <div class="card"><div class="tag t-amber" style="margin-bottom:8px">Why did it happen?</div><p style="font-size:14px">List potential causal factors; determine the root cause.</p></div>
+      <div class="card"><div class="tag t-green" style="margin-bottom:8px">How to prevent it?</div><p style="font-size:14px">Select the best solution to prevent any negative impact recurring.</p></div>
+    </div>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/555/original/ChatGPT_Image_Sep_15__2026__04_28_40_PM.png?1789469926" alt="RCA three questions" loading="lazy">
+      <figcaption>Problem solving, incident investigation and RCA connect through three questions: what, why, and how to prevent.</figcaption>
+    </figure>
+
+    <div class="quiz" style="margin-top:20px">
+      <div class="qtag">Quiz 1 · The goal of RCA</div>
+      <div class="qq">A team notices checkout errors, adds a "retry payment" button so users can try again, and moves on. From an RCA perspective, what have they mostly failed to do?</div>
+      <div class="qopts">
+        <button class="qopt" data-k="A" onclick="pickQ(this,'B')"><span class="qk">A</span>Nothing — adding a retry button fully resolves the incident</button>
+        <button class="qopt" data-k="B" onclick="pickQ(this,'B')"><span class="qk">B</span>They treated a symptom without discovering and fixing the underlying root cause (and preventing recurrence)</button>
+        <button class="qopt" data-k="C" onclick="pickQ(this,'B')"><span class="qk">C</span>They should have ignored the errors until more data arrived</button>
+        <button class="qopt" data-k="D" onclick="pickQ(this,'B')"><span class="qk">D</span>They defined the problem by its impact on goals, which RCA discourages</button>
+      </div>
+      <div class="qexp"><b>Answer: B.</b> RCA's goals are to discover the root cause, fix/learn from it, and prevent recurrence. A retry button papers over the symptom (failed payments) without asking <em>why</em> payments fail — so the underlying cause remains and the problem will return.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFE CYCLE -->
+<section class="sec sec-alt" id="lifecycle">
+  <div class="wrap">
+    <div class="lbl">The repeatable steps</div>
+    <h2>Life Cycle of an RCA</h2>
+    <p class="measure" style="margin-bottom:24px">Four stages — and it's the exact <strong>CRIED</strong> spine from Lecture 1, now run at full depth. Tap each to expand.</p>
+
+    <div class="mod2" style="margin-bottom:8px">
+      <div class="fs" onclick="toggleF(this)"><div class="fsh"><div class="fl" style="background:var(--accent)">C</div><div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--text-h)">Clarify</div><div style="font-size:12px;color:var(--text-s)">Pin down the problem</div></div><div style="color:var(--text-m);font-size:12px">▼</div></div><div class="fb"><ul class="ml"><li>Ask questions to get clarity on the problem</li><li>Clarify terms and set parameters for discussion</li><li>Outline the approach you'll follow</li></ul></div></div>
+      <div class="fs" onclick="toggleF(this)"><div class="fsh"><div class="fl" style="background:var(--amber)">R</div><div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--text-h)">Rule Out</div><div style="font-size:12px;color:var(--text-s)">Kill the boring explanations</div></div><div style="color:var(--text-m);font-size:12px">▼</div></div><div class="fb"><ul class="ml"><li>List high-level causes; discard out-of-scope ones</li><li>Check the underlying data is accurate</li><li>Rule out technical issues, glitches, bugs, outliers</li><li>List observations and start diagnosing</li></ul></div></div>
+      <div class="fs" onclick="toggleF(this)"><div class="fsh"><div class="fl" style="background:var(--blue)">I</div><div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--text-h)">Internal Factors</div><div style="font-size:12px;color:var(--text-s)">Look inside the company</div></div><div style="color:var(--text-m);font-size:12px">▼</div></div><div class="fb"><ul class="ml"><li>Any recent features / products launched?</li><li>Any recent changes by other teams?</li><li>Slice &amp; dice the data by user demographics <span style="color:var(--text-s)">(= Segmentation from TROPiCS)</span></li></ul></div></div>
+      <div class="fs" onclick="toggleF(this)"><div class="fsh"><div class="fl" style="background:var(--purple)">E</div><div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--text-h)">External Factors</div><div style="font-size:12px;color:var(--text-s)">Look at the world outside</div></div><div style="color:var(--text-m);font-size:12px">▼</div></div><div class="fb"><ul class="ml"><li>Any bad PR or controversy?</li><li>Any change in user behaviour or customer trends?</li><li>Macroeconomic or geographical changes?</li><li>Competitor analysis</li></ul></div></div>
+    </div>
+    <div class="callout"><p><strong>Note:</strong> capture and report all findings, no matter how small or insignificant they may seem.</p></div>
+
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/557/original/ChatGPT_Image_Sep_15__2026__04_32_09_PM.png?1789470145" alt="RCA life cycle" loading="lazy">
+      <figcaption>The RCA life cycle — Clarify → Rule Out → Internal → External, the CRIED spine at full depth.</figcaption>
+    </figure>
+    <a class="toollink" href="https://dsml-vizs.vercel.app/pa-4/rca-lifecycle-stage-flow-cried-accordion-stage-reveal/" target="_blank" rel="noopener">🔁 Interactive: RCA life-cycle stage flow ↗</a>
+
+    <div class="witty" style="margin-top:20px">🔗 "Internal → slice &amp; dice by demographics" is your old <strong>Segmentation</strong> from TROPiCS. "External → competitor / bad PR / seasonality" is the External-data step. You're not learning a new framework — you're watching the one you know solve a messy real case.</div>
+
+    <div class="quiz">
+      <div class="qtag">Quiz 2 · The RCA life cycle</div>
+      <div class="qq">Midway through an RCA on a sales dip, an analyst confirms the tracking pixel wasn't double-counting and the data pipeline had no failures. Which stage is this, and why does it come early?</div>
+      <div class="qopts">
+        <button class="qopt" data-k="A" onclick="pickQ(this,'B')"><span class="qk">A</span>Internal Factors — because pixels are internal to the company</button>
+        <button class="qopt" data-k="B" onclick="pickQ(this,'B')"><span class="qk">B</span>Rule Out — you first eliminate bugs, glitches and bad data before hunting real causes</button>
+        <button class="qopt" data-k="C" onclick="pickQ(this,'B')"><span class="qk">C</span>External Factors — tracking is a third-party concern</button>
+        <button class="qopt" data-k="D" onclick="pickQ(this,'B')"><span class="qk">D</span>Clarify — you are defining the problem scope</button>
+      </div>
+      <div class="qexp"><b>Answer: B.</b> Checking for technical issues, glitches, outliers and inaccurate data is the Rule Out stage. It comes early because a "drop" that is really a logging bug would send the whole analysis chasing a ghost — same lesson as "Rule Out" in CRIED.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MYNTRA CASE -->
+<section class="sec" id="myntra">
+  <div class="wrap">
+    <div class="lbl">The case</div>
+    <h2>Myntra — a 5% → 3% Drop in Confirmed Orders</h2>
+    <div class="card" style="margin:20px 0;border-left:4px solid var(--red)">
+      <div style="font-size:12px;font-weight:600;color:var(--text-s);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Problem statement</div>
+      <p style="font-size:15px;color:var(--text-h)">Myntra has observed a decline from <strong>5% to 3%</strong> (i.e. 2%) in confirmed orders over the last 3 days. Perform a Root Cause Analysis and diagnose the issue.</p>
+    </div>
+
+    <!-- CCTV ANALOGY -->
+    <h3 style="font-size:1.1rem;margin:24px 0 6px">First, the evidence source: clickstream data</h3>
+    <p class="measure" style="margin-bottom:14px">Clickstream is the information collected as a user browses — unique vs repeat visitor, search terms, landing page, time on page, features clicked, cart adds/removes, where they go next, when they hit back.</p>
+
+    <div style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 12px">🧩 Analogy</div>
+    <div class="analogy" style="margin-bottom:24px">
+      <div class="an-visual cctv">
+        <div class="an-emoji">📹</div>
+        <div class="an-tag">Clickstream = store CCTV</div>
+        <div class="an-title">Clickstream is CCTV footage of your store</div>
+        <div class="an-premise">One shopper's walk tells you little. Play back thousands of tapes and you see exactly which aisle people wander into, where they double back, and where they drop the basket and leave. Aggregated clickstream is how you spot the leak.</div>
+      </div>
+      <div class="an-map">
+        <div class="an-row"><div class="an-ico">🎞️</div><div class="an-side">Each camera frame</div><div class="an-arrow">→</div><div class="an-frame">Every click, page &amp; cart action logged</div></div>
+        <div class="an-row"><div class="an-ico">👣</div><div class="an-side">One shopper's path</div><div class="an-arrow">→</div><div class="an-frame">A single session — not much use alone</div></div>
+        <div class="an-row"><div class="an-ico">📼</div><div class="an-side">All the footage together</div><div class="an-arrow">→</div><div class="an-frame">Aggregated data → real trends</div></div>
+        <div class="an-row"><div class="an-ico">🚪</div><div class="an-side">Where people walk out</div><div class="an-arrow">→</div><div class="an-frame">Drop-off / bounce points to fix</div></div>
+      </div>
+    </div>
+
+    <div class="g4" style="margin-bottom:20px">
+      <div class="mini"><div class="mk" style="background:var(--accent)">User info</div><p style="font-size:13px;color:var(--text-s)">Search terms, pages landed on, features used, cart adds/removes → actionable insight.</p></div>
+      <div class="mini"><div class="mk" style="background:var(--blue)">User routes</div><p style="font-size:13px;color:var(--text-s)">The different paths visitors take to reach a page or make a purchase.</p></div>
+      <div class="mini"><div class="mk" style="background:var(--purple)">Trends &amp; UX</div><p style="font-size:13px;color:var(--text-s)">Fast exits flag poorly-optimised pages; spot UX shortcomings to fix.</p></div>
+      <div class="mini"><div class="mk" style="background:var(--green)">Digital marketing</div><p style="font-size:13px;color:var(--text-s)">Which ads/campaigns drive traffic &amp; conversion, and when they work best.</p></div>
+    </div>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/561/original/ChatGPT_Image_Sep_15__2026__04_35_50_PM.png?1789470377" alt="Clickstream data" loading="lazy">
+      <figcaption>Clickstream data — the raw footage of every user's journey through the site.</figcaption>
+    </figure>
+
+    <!-- ASSUMPTIONS -->
+    <h3 style="font-size:1.15rem;margin:36px 0 6px">Establishing assumptions (the Clarify step)</h3>
+    <p class="measure" style="margin-bottom:16px">Before counting anything, agree on exactly what each term means.</p>
+    <div class="g2">
+      <div class="card"><h3>Cart addition</h3><p style="font-size:14px">A user adds an item from the product page to their 'cart'; they can later view it and add/remove items.</p></div>
+      <div class="card"><h3>Session</h3><p style="font-size:14px">The browsing period between a login and the respective logout. One session can hold multiple orders or cart additions.</p></div>
+      <div class="card" style="border-left:4px solid var(--accent)"><h3>Conversion</h3><p style="font-size:14px;margin-bottom:8px">The metric Myntra watches is <strong>orders per session</strong>:</p><div style="background:var(--bg-section);border-radius:var(--r);padding:12px;font-size:13.5px;font-weight:600;color:var(--text-h)">Orders per session = orders placed in a day ÷ total sessions that day</div><p style="font-size:13px;color:var(--text-s);margin-top:8px">One order can have multiple items.</p></div>
+      <div class="card" style="border-left:4px solid var(--amber)"><h3>Bounce session</h3><p style="font-size:14px;margin-bottom:8px">A session where the user landed only on a single page (homepage) and left.</p><div style="background:var(--bg-section);border-radius:var(--r);padding:12px;font-size:13.5px;font-weight:600;color:var(--text-h)">Bounce rate = bounce sessions in a day ÷ total sessions that day</div></div>
+    </div>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/563/original/ChatGPT_Image_Sep_15__2026__04_38_59_PM.png?1789470545" alt="Key definitions" loading="lazy">
+      <figcaption>Pinning down conversion, session and bounce before touching any numbers.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- FUNNEL & BACKTRACKING -->
+<section class="sec sec-alt" id="funnel">
+  <div class="wrap">
+    <div class="lbl">Estimation &amp; backtracking</div>
+    <h2>Put Numbers on the Funnel, Then Work Backwards</h2>
+    <p class="measure" style="margin-bottom:20px">A rough estimate of a typical day (≈100 sessions) shows how a healthy funnel narrows to a 5% conversion.</p>
+
+    <div class="fnl" style="margin-bottom:14px">
+      <div class="fnl-row"><div class="fnl-name">Total sessions</div><div class="fnl-track"><div class="fnl-bar" style="width:100%">100</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Non-bounced (10% bounce)</div><div class="fnl-track"><div class="fnl-bar" style="width:90%">90</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Product-page view (~⅓)</div><div class="fnl-track"><div class="fnl-bar" style="width:30%">30</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Add to Cart / Buy Now (50%)</div><div class="fnl-track"><div class="fnl-bar" style="width:15%">15</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Checkout</div><div class="fnl-track"><div class="fnl-bar" style="width:12%">12</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Payments</div><div class="fnl-track"><div class="fnl-bar" style="width:6%;background:linear-gradient(90deg,#F59E0B,#EF4444)">6</div></div></div>
+      <div class="fnl-row"><div class="fnl-name">Confirmed orders</div><div class="fnl-track"><div class="fnl-bar" style="width:5%;background:var(--green)">5</div></div></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-s);margin-bottom:8px">→ 5 confirmed orders from 100 sessions = <strong style="color:var(--text-h)">5% conversion</strong> (necessary assumptions made).</p>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/566/original/ChatGPT_Image_Sep_15__2026__04_42_12_PM.png?1789470738" alt="Funnel estimate" loading="lazy">
+      <figcaption>The estimated funnel — from 100 sessions down to 5 confirmed orders.</figcaption>
+    </figure>
+    <a class="toollink" href="https://dsml-vizs.vercel.app/pa-4/funnel-drop-off-estimation-draggable-rate-funnel-builder/" target="_blank" rel="noopener" style="margin-bottom:8px">🧮 Interactive: build the drop-off funnel ↗</a>
+
+    <h3 style="font-size:1.15rem;margin:32px 0 6px">Backtracking the journey</h3>
+    <p class="measure" style="margin-bottom:16px">Orders are down 2%. Something upstream must have changed — so check each stage and eliminate what's unchanged.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      <div class="stg out"><div class="stg-ico" style="background:#D1FAE5">✓</div><div class="stg-name">User sessions / traffic</div><span class="vpill out">Unchanged</span></div>
+      <div class="stg out"><div class="stg-ico" style="background:#D1FAE5">✓</div><div class="stg-name">Bounce rate — steady at 10%</div><span class="vpill out">Unchanged</span></div>
+      <div class="stg out"><div class="stg-ico" style="background:#D1FAE5">✓</div><div class="stg-name">Product page — ratings 3.8–4.2, delivery 5–7 days, discounts 20–45%</div><span class="vpill out">Unchanged</span></div>
+      <div class="stg suspect"><div class="stg-ico" style="background:#FEF3C7">⚠️</div><div class="stg-name">Add to Cart</div><span class="vpill lead">Suspect</span></div>
+      <div class="stg suspect"><div class="stg-ico" style="background:#FEF3C7">⚠️</div><div class="stg-name">Checkout</div><span class="vpill lead">Suspect</span></div>
+      <div class="stg suspect"><div class="stg-ico" style="background:#FEF3C7">⚠️</div><div class="stg-name">Make Payment</div><span class="vpill lead">Suspect</span></div>
+    </div>
+    <div class="callout"><p>Every earlier stage checks out. By elimination, the leak lives in the <strong>last three stages</strong> — Add to Cart, Checkout, Make Payment.</p></div>
+    <div class="g2" style="margin-top:8px">
+      <figure class="fig" style="margin:0"><img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/567/original/ChatGPT_Image_Sep_15__2026__04_45_09_PM.png?1789470914" alt="Backtracking the funnel" loading="lazy"><figcaption>Backtracking — testing each stage against last week.</figcaption></figure>
+      <figure class="fig" style="margin:0"><img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/568/original/ChatGPT_Image_Sep_15__2026__04_46_52_PM.png?1789471018" alt="Narrowed to last three stages" loading="lazy"><figcaption>Narrowed down: the drop must sit in the final three stages.</figcaption></figure>
+    </div>
+    <a class="toollink" href="https://dsml-vizs.vercel.app/pa-4/backtracking-stage-elimination-evidence-checklist-reveal/" target="_blank" rel="noopener" style="margin-top:6px">🔎 Interactive: stage-elimination checklist ↗</a>
+
+    <div class="quiz" style="margin-top:24px">
+      <div class="qtag">Quiz 3 · Backtracking the funnel</div>
+      <div class="qq">Sessions are flat, bounce rate is steady at 10%, and product-page ratings, delivery times and discounts are all unchanged — yet confirmed orders fell 2%. What does this pattern tell you?</div>
+      <div class="qopts">
+        <button class="qopt" data-k="A" onclick="pickQ(this,'B')"><span class="qk">A</span>The problem must be a drop in incoming traffic</button>
+        <button class="qopt" data-k="B" onclick="pickQ(this,'B')"><span class="qk">B</span>The problem lies in the later funnel stages — Add to Cart, Checkout, or Make Payment</button>
+        <button class="qopt" data-k="C" onclick="pickQ(this,'B')"><span class="qk">C</span>There is no real problem; the numbers are within noise</button>
+        <button class="qopt" data-k="D" onclick="pickQ(this,'B')"><span class="qk">D</span>The homepage needs a redesign to reduce bounce</button>
+      </div>
+      <div class="qexp"><b>Answer: B.</b> Every earlier stage checks out as unchanged, so by elimination the leak must be downstream. Backtracking narrows the 2% drop to the last three stages — exactly where the investigation should now focus.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLARIFY -->
+<section class="sec" id="clarify">
+  <div class="wrap">
+    <div class="lbl">Ask clarifying questions</div>
+    <h2>Interrogate Every Suspect</h2>
+    <p class="measure" style="margin-bottom:24px">Now narrow the <em>why</em>. Each question rules a cause in or out. Tap to reveal what the data said.</p>
+
+    <div class="mod2">
+      <div class="qa">
+        <div class="tag t-purple" style="margin-bottom:8px">External · competitors</div>
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Has a competitor (e.g. Ajio) announced a sale or campaign?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill out">Ruled out (tentatively)</span><p style="font-size:14px">Limited visibility, but customer chatter and competitor social handles show nothing obvious. Can't fully rule out hidden targeting — but no evidence.</p></div></div>
+      </div>
+      <div class="qa">
+        <div class="tag t-blue" style="margin-bottom:8px">Demographic · region</div>
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Is the decline concentrated in a particular region or city?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill out">Ruled out</span><p style="font-size:14px">No location effect — the impact is spread across many different places.</p></div></div>
+      </div>
+      <div class="qa">
+        <div class="tag t-blue" style="margin-bottom:8px">Demographic · gender/age</div>
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Is it tied to a specific gender or age group?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill out">Ruled out</span><p style="font-size:14px">Uniformly distributed across all genders and age groups — no significant deviation.</p></div></div>
+      </div>
+      <div class="qa">
+        <div class="tag t-amber" style="margin-bottom:8px">Macro · supply</div>
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Any partnership change, merchant backing out, or stock-outs?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill out">Ruled out</span><p style="font-size:14px">No such event recorded; enough stock for the majority of listed products.</p></div></div>
+      </div>
+      <div class="qa" style="border:1.5px solid var(--amber)">
+        <div class="tag t-amber" style="margin-bottom:8px">Product · changes</div>
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Any recent changes or upgrades on the application?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill lead">Lead — door stays open</span><p style="font-size:14px"><strong>Yes.</strong> Certain upgrades were deployed to the app in the last few days.</p></div></div>
+      </div>
+    </div>
+
+    <div class="witty">🚪 Every external and demographic cause gets ruled out — until one door stays open: a recent app upgrade. RCA is as much about confidently eliminating suspects as finding the culprit.</div>
+  </div>
+</section>
+
+<!-- DIAGNOSE + PAYMENT + CONCLUSION -->
+<section class="sec sec-alt" id="diagnose">
+  <div class="wrap">
+    <div class="lbl">Diagnose the root cause</div>
+    <h2>Follow the One Surviving Lead</h2>
+    <p class="measure" style="margin-bottom:24px">The app upgrade survived every question. Follow it — question by question — until the evidence lands.</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+      <div class="qa">
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Q1 · Any change to the "Add to Cart" button or the Checkout page?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><p style="font-size:14px;margin-top:12px">The version upgrade changed the <strong>complete shopping flow</strong> — the checkout process was reworked for a "seamless" experience. But the <strong>Add to Cart button's placement and design were left untouched</strong>.</p></div>
+      </div>
+      <div class="qa">
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Q2 · Any bug reports for the changes?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><p style="font-size:14px;margin-top:12px">Not too many — the update launched only a few days ago, so reports are still thin.</p></div>
+      </div>
+      <div class="qa">
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Q3 · Are we missing any leading payment merchants?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><p style="font-size:14px;margin-top:12px">No — Myntra facilitates Paytm, PhonePe &amp; GPay and most leading merchants. Clear on this front.</p></div>
+      </div>
+      <div class="qa" style="border:1.5px solid var(--red)">
+        <p style="font-size:14.5px;font-weight:600;color:var(--text-h);margin-bottom:12px">Q4 · Are the payment gateways working properly?</p>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Reveal answer</button>
+        <div class="rev-body"><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px"><span class="vpill lead">The break</span><p style="font-size:14px">We <strong>have received complaints</strong> from customers who faced issues while trying to make payment during checkout.</p></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.15rem;margin:8px 0 6px">Payment-gateway reliability</h3>
+    <p class="measure" style="margin-bottom:14px">Third-party data comparing gateway reliability shows the pattern clearly: <strong>3 of 5</strong> partnering banking services are down.</p>
+    <div class="g3" style="margin-bottom:14px">
+      <div class="gw down">🔴 Gateway 1 · high downtime</div>
+      <div class="gw down">🔴 Gateway 2 · high downtime</div>
+      <div class="gw down">🔴 Gateway 3 · high downtime</div>
+      <div class="gw ok">🟢 Gateway 4 · operational</div>
+      <div class="gw ok">🟢 Gateway 5 · operational</div>
+    </div>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/571/original/ChatGPT_Image_Sep_15__2026__04_55_15_PM.png?1789471521" alt="Payment gateway reliability" loading="lazy">
+      <figcaption>Third-party reliability data — 3 of 5 gateways showing frequent issues and high server downtime this week.</figcaption>
+    </figure>
+
+    <div class="card" style="margin-top:20px;border-left:4px solid var(--green)">
+      <div style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">✅ Conclusion — root cause found</div>
+      <ul class="ml">
+        <li>3 of 5 banking services providing payment options are experiencing frequent issues &amp; high server downtime this week</li>
+        <li>This validates the customer complaints about incomplete transactions and payment failures</li>
+        <li>If a payment fails multiple times, customers won't proceed — for fear of losing money — so confirmed orders fall automatically</li>
+        <li>But users are <strong>still adding to carts normally</strong> → no critical issue with the app itself → things should return to normal once the server issues resolve</li>
+      </ul>
+    </div>
+
+    <div class="quiz" style="margin-top:24px">
+      <div class="qtag">Quiz 4 · Reading the root cause</div>
+      <div class="qq">The data shows 3 of 5 payment gateways with high downtime, yet users are still adding items to carts at normal rates. Why is that second fact reassuring for Myntra?</div>
+      <div class="qopts">
+        <button class="qopt" data-k="A" onclick="pickQ(this,'B')"><span class="qk">A</span>It proves the app upgrade caused the problem after all</button>
+        <button class="qopt" data-k="B" onclick="pickQ(this,'B')"><span class="qk">B</span>It shows demand and the product experience are healthy — the fault is the external payment gateways, so orders should recover once downtime is resolved</button>
+        <button class="qopt" data-k="C" onclick="pickQ(this,'B')"><span class="qk">C</span>It means the conversion metric was defined incorrectly</button>
+        <button class="qopt" data-k="D" onclick="pickQ(this,'B')"><span class="qk">D</span>It suggests the bounce rate is the true root cause</button>
+      </div>
+      <div class="qexp"><b>Answer: B.</b> Healthy cart additions mean users still want to buy and the funnel up to payment works — so the loss isn't a product or demand problem. The break is external (bank gateway downtime), which points to a clear, temporary fix and a likely recovery once the servers stabilise.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section class="sec" id="interview">
+  <div class="wrap">
+    <div class="lbl">Interview corner</div>
+    <h2>Practice Questions</h2>
+    <p class="measure" style="margin-bottom:28px">Frame your own answer first — then reveal the approach.</p>
+    <div class="mod2">
+      <div class="iq-card">
+        <div style="font-size:15px;font-weight:600;color:var(--text-h);margin-bottom:8px">Q1 — A food-delivery app's orders dropped 15% this week. Walk me through your RCA.</div>
+        <span class="tag t-indigo" style="margin-bottom:14px;display:inline-block">Full RCA</span>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Show approach</button>
+        <div class="rev-body"><div style="background:var(--bg-section);border-radius:var(--r);padding:16px;margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:14px"><strong style="color:var(--accent)">Clarify:</strong> orders how defined? 15% vs what baseline? Which regions/segments?</div>
+          <div style="font-size:14px"><strong style="color:var(--amber)">Rule Out:</strong> tracking/logging bug, one-off outlier day, pipeline failure.</div>
+          <div style="font-size:14px"><strong style="color:var(--blue)">Internal:</strong> recent app release, pricing/menu change, slice by platform &amp; segment.</div>
+          <div style="font-size:14px"><strong style="color:var(--purple)">External:</strong> competitor promo, weather/holiday, delivery-partner shortage.</div>
+          <div style="font-size:14px"><strong style="color:var(--green)">Diagnose:</strong> follow the surviving lead down the funnel to the failing stage; recommend fix + prevention.</div>
+        </div></div>
+      </div>
+      <div class="iq-card">
+        <div style="font-size:15px;font-weight:600;color:var(--text-h);margin-bottom:8px">Q2 — Signups jumped 30% overnight. Is that good news? How do you check?</div>
+        <span class="tag t-amber" style="margin-bottom:14px;display:inline-block">Rule Out first</span>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Show approach</button>
+        <div class="rev-body"><div style="background:var(--bg-section);border-radius:var(--r);padding:16px;margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:14px"><strong style="color:var(--amber)">Rule Out:</strong> a spike can be a tracking double-count or bot/fraud sign-ups — verify before celebrating.</div>
+          <div style="font-size:14px"><strong style="color:var(--blue)">Segment:</strong> one channel, region or device? A single source spiking hints at a campaign or a bug.</div>
+          <div style="font-size:14px"><strong style="color:var(--green)">Confirm value:</strong> do the new signups activate &amp; convert, or vanish? An "up" metric deserves the same scrutiny as a "down" one.</div>
+        </div></div>
+      </div>
+      <div class="iq-card">
+        <div style="font-size:15px;font-weight:600;color:var(--text-h);margin-bottom:8px">Q3 — Why is "Rule Out" always the step you do before hunting real causes?</div>
+        <span class="tag t-blue" style="margin-bottom:14px;display:inline-block">Concept</span>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Show approach</button>
+        <div class="rev-body"><div style="background:var(--bg-section);border-radius:var(--r);padding:16px;margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:14px">A "drop" that's really a logging bug sends the whole analysis chasing a ghost — wasting days on a cause that doesn't exist.</div>
+          <div style="font-size:14px">Cheapest, fastest to check: data accuracy, glitches, outliers. Eliminate the boring explanation before the expensive investigation.</div>
+        </div></div>
+      </div>
+      <div class="iq-card">
+        <div style="font-size:15px;font-weight:600;color:var(--text-h);margin-bottom:8px">Q4 — After you find the root cause, what makes an RCA actually "complete"?</div>
+        <span class="tag t-green" style="margin-bottom:14px;display:inline-block">Prevention</span>
+        <button class="rev-btn" onclick="toggleR(this)">▶ &nbsp;Show approach</button>
+        <div class="rev-body"><div style="background:var(--bg-section);border-radius:var(--r);padding:16px;margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:14px">Not just naming the cause — the three goals: <strong>discover</strong> it, <strong>fix/learn</strong> from it, and <strong>prevent recurrence</strong>.</div>
+          <div style="font-size:14px">A retry button that hides failing payments isn't an RCA. Add gateway monitoring/alerts and a fallback so the same break can't silently cost orders again.</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POCKET -->
+<section class="sec sec-alt" id="pocket">
+  <div class="wrap">
+    <div class="lbl">Quick reference</div>
+    <h2 style="margin-bottom:20px">RCA Pocket Card</h2>
+    <div class="pocket">
+      <div class="g2" style="gap:36px">
+        <div>
+          <h3>RCA life cycle (= CRIED)</h3>
+          <div class="prow">
+            <div class="pi"><span>C</span> Clarify</div>
+            <div class="pi"><span>R</span> Rule Out</div>
+            <div class="pi"><span>I</span> Internal</div>
+            <div class="pi"><span>E</span> External</div>
+          </div>
+          <h3>Three questions</h3>
+          <div class="prow">
+            <div class="pi"><span>?</span> What's the problem</div>
+            <div class="pi"><span>?</span> Why did it happen</div>
+            <div class="pi"><span>?</span> How to prevent it</div>
+          </div>
+        </div>
+        <div>
+          <h3>The journey funnel</h3>
+          <div class="prow">
+            <div class="pi">Sessions → Product page → Add to Cart → Checkout → Payment → Order</div>
+          </div>
+          <h3>Key formulas</h3>
+          <div class="prow">
+            <div class="pi"><span>Conv</span> orders ÷ sessions</div>
+            <div class="pi"><span>Bounce</span> bounce sessions ÷ sessions</div>
+          </div>
+          <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px;font-size:13.5px;color:#C7D2FE;margin-top:4px">Backtrack: eliminate every unchanged stage → the leak is what's left.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY + TAKEAWAYS -->
+<section class="sec" id="summary">
+  <div class="wrap">
+    <div class="lbl">Today's journey in one picture</div>
+    <h2 style="margin-bottom:6px">From a 2% Drop to a Provable Cause</h2>
+    <figure class="fig">
+      <img src="https://d2beiqkhq929f0.cloudfront.net/public_assets/assets/000/228/574/original/ChatGPT_Image_Sep_15__2026__05_01_34_PM.png?1789471901" alt="RCA journey summary" loading="lazy">
+      <figcaption>The whole trail — define, estimate, backtrack, clarify, diagnose — on the CRIED spine.</figcaption>
+    </figure>
+
+    <h2 style="margin:36px 0 20px">Key Takeaways</h2>
+    <div class="card" style="max-width:960px">
+      <div class="tw"><div class="twn">1</div><div><div style="font-weight:600;color:var(--text-h);margin-bottom:4px">A metric-change question is an RCA</div><p style="font-size:14px;color:var(--text-s)">And RCA is the CRIED spine at full depth: Clarify → Rule Out → Internal → External.</p></div></div>
+      <div class="tw"><div class="twn">2</div><div><div style="font-weight:600;color:var(--text-h);margin-bottom:4px">Rule out the boring explanation first</div><p style="font-size:14px;color:var(--text-s)">Bugs, glitches, outliers, bad data. A logging error looks exactly like a real drop until you check.</p></div></div>
+      <div class="tw"><div class="twn">3</div><div><div style="font-weight:600;color:var(--text-h);margin-bottom:4px">Estimate the funnel, then backtrack</div><p style="font-size:14px;color:var(--text-s)">Put rough numbers on each stage; eliminate every unchanged stage until only the failing ones remain.</p></div></div>
+      <div class="tw"><div class="twn">4</div><div><div style="font-weight:600;color:var(--text-h);margin-bottom:4px">Clarifying questions rule suspects in and out</div><p style="font-size:14px;color:var(--text-s)">Confidently eliminating causes (no competitor sale, no regional skew, no stock-out) is half the job — until one door stays open.</p></div></div>
+      <div class="tw"><div class="twn">5</div><div><div style="font-weight:600;color:var(--text-h);margin-bottom:4px">State the cause — and whether it's yours to fix</div><p style="font-size:14px;color:var(--text-s)">The break was external gateway downtime; healthy carts meant the app was fine and recovery was likely once servers stabilised.</p></div></div>
+    </div>
+
+    <div style="margin-top:28px;text-align:center;padding:36px;background:var(--accent-wash);border-radius:var(--rm)">
+      <div style="font-size:13px;color:var(--text-s);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;font-weight:600">Up next</div>
+      <div style="font-size:24px;font-weight:700;color:var(--text-h);margin-bottom:4px">RCA II — Case Study</div>
+      <div style="font-size:14.5px;color:var(--text-s)">We put this exact method straight to work on another real root-cause case.</div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0F172A;padding:28px 20px;text-align:center">
+  <div style="font-size:13px;color:#475569">Scaler — Product Analytics Module &nbsp;·&nbsp; Lecture 4 of 12</div>
+</footer>
+
+<script>
+function toggleF(s){s.querySelector('.fb').classList.toggle('on');}
+function pickQ(btn,correct){
+  var box=btn.closest('.quiz');
+  box.querySelectorAll('.qopt').forEach(function(o){o.disabled=true;});
+  if(btn.getAttribute('data-k')===correct){btn.classList.add('correct');}
+  else{btn.classList.add('wrong');box.querySelector('.qopt[data-k="'+correct+'"]').classList.add('correct');}
+  box.querySelector('.qexp').classList.add('on');
+}
+function toggleR(btn){var b=btn.nextElementSibling,open=b.classList.contains('on');b.classList.toggle('on');var isApp=btn.textContent.indexOf('approach')>-1;var word=isApp?'approach':'answer';btn.innerHTML=(open?'▶ &nbsp;'+(isApp?'Show':'Reveal'):'▼ &nbsp;Hide')+' '+word;}
+var secs=[].slice.call(document.querySelectorAll('section[id]'));
+var nav=[].slice.call(document.querySelectorAll('.snav a'));
+window.addEventListener('scroll',function(){
+  var cur='';secs.forEach(function(s){if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  nav.forEach(function(n){n.classList.remove('on');if(n.getAttribute('href')==='#'+cur)n.classList.add('on');});
+});
+</script>
+</body>
+</html>
